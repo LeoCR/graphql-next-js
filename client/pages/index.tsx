@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Layout from '@components/Layout/Layout'
-import { Card } from 'semantic-ui-react'
 import KawaiiHeader from '@components/KawaiiHeader/KawaiiHeader'
-
+import {useAvocados} from '@hooks/useAvocados'
+import { Card } from 'semantic-ui-react'
+import dotenv from 'dotenv'
+dotenv.config()
 const HomePage = () => {
+  const { data, status } = useAvocados()
+  useEffect(() => {
+    if (status === 'success') {
+      console.log('data', JSON.stringify(data) + ' status=>' + status)
+    }
+  }, [data, status])
+
   return (
     <Layout title="Home">
       <KawaiiHeader />
