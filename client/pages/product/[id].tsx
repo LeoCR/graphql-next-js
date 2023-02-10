@@ -3,7 +3,7 @@ import type { GetStaticPaths, GetStaticProps } from 'next'
 
 import Layout from '@components/Layout/Layout'
 import ProductSummary from '@components/ProductSummary/ProductSummary'
-import { baseURL } from '@hooks/useAvocados'
+import { baseURL } from '@utils/getBaseURL'
 
 // TODO: Use the graphQL API from https://platzi.com/cursos/nodejs-graphql
 export const getStaticPaths: GetStaticPaths = async () => {

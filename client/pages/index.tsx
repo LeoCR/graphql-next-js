@@ -1,18 +1,24 @@
 import React, { useEffect } from 'react'
+import { Card } from 'semantic-ui-react'
 import Layout from '@components/Layout/Layout'
 import KawaiiHeader from '@components/KawaiiHeader/KawaiiHeader'
-import {useAvocados} from '@hooks/useAvocados'
-import { Card } from 'semantic-ui-react'
-import dotenv from 'dotenv'
-dotenv.config()
+import { useAvocados } from '@hooks/useAvocados'
+
 const HomePage = () => {
-  const { data, status } = useAvocados()
+  const { isLoading, error, data, isFetching, status } = useAvocados()
   useEffect(() => {
     if (status === 'success') {
-      console.log('data', JSON.stringify(data) + ' status=>' + status)
+      console.log(' status=>' + status)
     }
-  }, [data, status])
+  }, [status, data])
+  if (isLoading || isFetching) {
+    return 'Loading...'
+  }
 
+  if (error) {
+    return 'An error has occurred: ' + JSON.stringify(error)
+  }
+  console.log('data', data)
   return (
     <Layout title="Home">
       <KawaiiHeader />
