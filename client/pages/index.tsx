@@ -1,35 +1,54 @@
-import React, { useEffect } from 'react'
-import { Card } from 'semantic-ui-react'
+import React, { useState } from 'react'
+import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import { useQuery } from '@apollo/client'
+import { Button, Card } from 'semantic-ui-react'
 import Layout from '@components/Layout/Layout'
 import KawaiiHeader from '@components/KawaiiHeader/KawaiiHeader'
-import { useAvocados } from '@hooks/useAvocados'
+import { useAvocado } from '@hooks/useAvocados'
+import { Avocado, GetAllAvos } from 'service/graphql'
+import { apolloClient } from 'service/client'
+export const ChildComponent=()=>{
+  const { loading,  data } = useAvocado(1)
 
-const HomePage = () => {
-  const { isLoading, error, data, isFetching, status } = useAvocados()
-  useEffect(() => {
-    if (status === 'success') {
-      console.log(' status=>' + status)
+  if (loading ) {
+    return <>Loading...</>
+  }
+  console.log('Single Avocado ', data)
+  return(<>Moaunted</>)
+}
+export const getStaticProps:GetStaticProps<{avocados:Avocado[]}>=async()=>{
+  const response = await apolloClient.query({
+    query:GetAllAvos
+  })
+  if(response.data.avocados===null){
+    return <>Failed</>
+  }
+  const avocados=response.data.avocados as Avocado[]
+  return{
+    props:{
+      avocados
     }
-  }, [status, data])
-  if (isLoading || isFetching) {
-    return 'Loading...'
   }
+}
+const HomePage = ({avocados}:InferGetStaticPropsType<typeof getStaticProps>) => {
+  const [isEnabled,setIsEnabled]= useState(false)
 
-  if (error) {
-    return 'An error has occurred: ' + JSON.stringify(error)
-  }
-  console.log('data', data)
+  console.log('avocados', avocados)
   return (
     <Layout title="Home">
       <KawaiiHeader />
+      <Button color="red" onClick={() => setIsEnabled(!isEnabled)}>
+        Set Enabled
+      </Button>
+      {isEnabled && <ChildComponent />}
       <Card.Group itemsPerRow={2} centered>
-        {documentationList.map((doc) => (
+        {avocados.map((avo) => (
           <Card
-            key={doc.link}
-            href={doc.link}
-            header={doc.title}
-            meta={doc.meta}
-            description={doc.description}
+            key={avo.id}
+            href={'/product/'+avo.id}
+            header={avo.name}
+            meta={avo.attributes?.hardiness}
+            description={avo.attributes?.description}
           />
         ))}
       </Card.Group>

@@ -1,0 +1,33 @@
+query GetAllAvos{
+  avocados {
+    id
+    image
+    name
+    createdAt
+    sku
+    price
+    attributes {
+      description
+      taste
+      shape
+      hardiness
+    }
+  }
+}
+
+query GetAvo($avocadoId: ID!) {
+  avocado(id: $avocadoId) {
+    id
+    image
+    name
+    createdAt
+    sku
+    price
+    attributes {
+      description
+      taste
+      shape
+      hardiness
+    }
+  }
+}

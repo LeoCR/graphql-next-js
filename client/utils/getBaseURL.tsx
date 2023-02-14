@@ -8,5 +8,3 @@ export const requester = axios.create({
     'content-type': 'application/json',
   },
 })
-
-export const apiURL='http://localhost:3001'
