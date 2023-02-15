@@ -31,3 +31,19 @@ query GetAvo($avocadoId: ID!) {
     }
   }
 }
+
+mutation AddAvocado($dto: CreateAvocadoDto!) {
+  addAvocado(dto: $dto) {
+    image
+    name
+    createdAt
+    sku
+    price
+    attributes {
+      description
+      taste
+      shape
+      hardiness
+    }
+  }
+}

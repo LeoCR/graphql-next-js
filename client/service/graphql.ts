@@ -116,6 +116,13 @@ export type Category = {
   products?: Maybe<Array<Maybe<Product>>>;
 };
 
+export type CreateAvocadoDto = {
+  image: Scalars['String'];
+  name: Scalars['String'];
+  price: Scalars['Float'];
+  sku: Scalars['String'];
+};
+
 export type CreateCategoryDto = {
   image: Scalars['String'];
   name: Scalars['CategoryNameType'];
@@ -131,11 +138,17 @@ export type CreateProductDto = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addAvocado?: Maybe<Avocado>;
   addCategory?: Maybe<Category>;
   addProduct?: Maybe<Product>;
   deleteProduct?: Maybe<Scalars['ID']>;
   login?: Maybe<AuthResponse>;
   updateProduct?: Maybe<Product>;
+};
+
+
+export type MutationAddAvocadoArgs = {
+  dto: CreateAvocadoDto;
 };
 
 
@@ -229,6 +242,13 @@ export type GetAvoQueryVariables = Exact<{
 
 export type GetAvoQuery = { __typename?: 'Query', avocado?: { __typename?: 'Avocado', id: string, image: string, name: string, createdAt: string, sku: string, price: number, attributes?: { __typename?: 'Attribute', description: string, taste: string, shape: string, hardiness: string } | null } | null };
 
+export type AddAvocadoMutationVariables = Exact<{
+  dto: CreateAvocadoDto;
+}>;
+
+
+export type AddAvocadoMutation = { __typename?: 'Mutation', addAvocado?: { __typename?: 'Avocado', image: string, name: string, createdAt: string, sku: string, price: number, attributes?: { __typename?: 'Attribute', description: string, taste: string, shape: string, hardiness: string } | null } | null };
+
 
 export const GetAllAvos = gql`
     query GetAllAvos {
@@ -252,6 +272,23 @@ export const GetAvo = gql`
     query GetAvo($avocadoId: ID!) {
   avocado(id: $avocadoId) {
     id
+    image
+    name
+    createdAt
+    sku
+    price
+    attributes {
+      description
+      taste
+      shape
+      hardiness
+    }
+  }
+}
+    `;
+export const AddAvocado = gql`
+    mutation AddAvocado($dto: CreateAvocadoDto!) {
+  addAvocado(dto: $dto) {
     image
     name
     createdAt
