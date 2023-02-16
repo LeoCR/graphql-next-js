@@ -93,7 +93,10 @@ function saveToken(token: string) {
 
 export function retrieveToken() {
   return new Promise<string | null>((resolve) => {
-    const token = window.sessionStorage.getItem(TOKEN_KEY)
+    let token=null
+    if (typeof window !== 'undefined') {
+      token = window.sessionStorage.getItem(TOKEN_KEY)
+    }
     resolve(token)
   })
 }

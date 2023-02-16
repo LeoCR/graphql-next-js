@@ -21,7 +21,6 @@ export const getStaticProps:GetStaticProps<{avocados:Avocado[]}>=async()=>{
   }
 }
 const HomePage = ({avocados}:InferGetStaticPropsType<typeof getStaticProps>) => {
-  console.log('avocados', avocados)
   return (
     <Layout title="Home">
       <KawaiiHeader />

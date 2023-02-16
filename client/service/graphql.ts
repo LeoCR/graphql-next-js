@@ -117,10 +117,14 @@ export type Category = {
 };
 
 export type CreateAvocadoDto = {
+  description?: InputMaybe<Scalars['String']>;
+  hardiness?: InputMaybe<Scalars['String']>;
   image: Scalars['String'];
   name: Scalars['String'];
   price: Scalars['Float'];
+  shape?: InputMaybe<Scalars['String']>;
   sku: Scalars['String'];
+  taste?: InputMaybe<Scalars['String']>;
 };
 
 export type CreateCategoryDto = {

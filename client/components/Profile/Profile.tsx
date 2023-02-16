@@ -3,7 +3,7 @@ import { Segment, Header, Button } from 'semantic-ui-react'
 import { removeToken, User } from '@service/auth'
 
 import Layout from '@components/Layout/Layout'
-import { AddAvocado } from '@service/graphql';
+import { AddAvocado } from '@service/graphql'
 import { useMutation } from '@apollo/client'
 
 function Profile({ user }: { user: User }) {
@@ -13,6 +13,7 @@ function Profile({ user }: { user: User }) {
     await removeToken()
     window.location.reload()
   }
+
   const addNew = () => {
     addAvocado({
       variables: {
@@ -21,10 +22,13 @@ function Profile({ user }: { user: User }) {
           name: 'Reed',
           price: 6,
           sku: 'REED',
+          description: 'Reed Description',
+          shape: 'Oval',
+          taste: 'Delicious',
+          hardiness: 'Creamy',
         },
       },
     })
-    console.log('data=>', data)
   }
   return (
     <Layout title="Hola">
