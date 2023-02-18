@@ -81,7 +81,9 @@ export function useLogin({ onDone }: { onDone: () => void }) {
 function saveToken(token: string) {
   return new Promise<string>((resolve) => {
     try {
-      window.sessionStorage.setItem(TOKEN_KEY, token)
+      if (typeof window !== 'undefined') {
+        window.sessionStorage.setItem(TOKEN_KEY, token)
+      }
       resolve(token)
     } catch (e) {
       throw new Error(
@@ -103,7 +105,9 @@ export function retrieveToken() {
 
 export function removeToken() {
   return new Promise<void>((resolve) => {
-    window.sessionStorage.removeItem(TOKEN_KEY)
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.removeItem(TOKEN_KEY)
+    }
     resolve()
   })
 }

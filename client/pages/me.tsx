@@ -8,8 +8,6 @@ import Profile from '@components/Profile/Profile'
 
 function CurrentUser() {
   const { user, status } = useCurrentUser()
-  console.log('user', user)
-  console.log('status', status)
   if (status !== 'success') {
     return (
       <Layout title="Cargando...">

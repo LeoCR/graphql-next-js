@@ -1,34 +1,17 @@
 import { Segment, Header, Button } from 'semantic-ui-react'
-
+import { useRouter } from 'next/router'
 import { removeToken, User } from '@service/auth'
-
 import Layout from '@components/Layout/Layout'
-import { AddAvocado } from '@service/graphql'
-import { useMutation } from '@apollo/client'
 
 function Profile({ user }: { user: User }) {
-  const [addAvocado, { data, loading }] = useMutation(AddAvocado)
-
+  const router = useRouter()
   const logout = async () => {
     await removeToken()
     window.location.reload()
   }
 
   const addNew = () => {
-    addAvocado({
-      variables: {
-        dto: {
-          image: 'http://localhost:3000/images/reed.jpg',
-          name: 'Reed',
-          price: 6,
-          sku: 'REED',
-          description: 'Reed Description',
-          shape: 'Oval',
-          taste: 'Delicious',
-          hardiness: 'Creamy',
-        },
-      },
-    })
+    router.push('/admin/create')
   }
   return (
     <Layout title="Hola">
