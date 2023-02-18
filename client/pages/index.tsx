@@ -8,7 +8,8 @@ import { apolloClient } from '@service/client'
 
 export const getStaticProps:GetStaticProps<{avocados:Avocado[]}>=async()=>{
   const response = await apolloClient.query({
-    query:GetAllAvos
+    query:GetAllAvos,
+    fetchPolicy:'network-only'
   })
   if(response.data.avocados===null){
     return <>Failed</>
@@ -17,7 +18,8 @@ export const getStaticProps:GetStaticProps<{avocados:Avocado[]}>=async()=>{
   return{
     props:{
       avocados
-    }
+    },
+    revalidate:7
   }
 }
 const HomePage = ({avocados}:InferGetStaticPropsType<typeof getStaticProps>) => {
